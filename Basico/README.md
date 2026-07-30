@@ -485,6 +485,31 @@ DROP DATABASE pizzaria;
 ```
 
 ---
+# 📌 INNER JOIN
+Une duas tabelas com base em uma coluna em comum.
+
+```sql
+SELECT 
+    p.codigo_pedido, 
+    u.nome, 
+    p.data_pedido
+FROM pedidos p
+INNER JOIN usuarios u 
+    ON p.usuario_id = u.id;
+```
+
+# 📌 HAVING
+Filtra os resultados após um agrupamento (GROUP BY).
+
+```sql
+SQL
+SELECT 
+    usuario_id, 
+    COUNT(*) AS total_pedidos
+FROM pedidos
+GROUP BY usuario_id
+HAVING COUNT(*) > 2;
+```
 
 # 📌 Conceitos Importantes
 
