@@ -497,14 +497,138 @@ FROM pedidos p
 INNER JOIN usuarios u 
     ON p.usuario_id = u.id;
 ```
+---
 
-# 📌 HAVING
-Filtra os resultados após um agrupamento (GROUP BY).
+# 📌 LEFT OUTER JOIN
+
+Retorna todos os registros da tabela da esquerda e os registros correspondentes da tabela da direita. Quando não houver correspondência, os campos da tabela da direita serão preenchidos com `NULL`.
 
 ```sql
-SQL
-SELECT 
-    usuario_id, 
+SELECT
+    u.id,
+    u.nome,
+    p.codigo_pedido
+FROM usuarios u
+LEFT OUTER JOIN pedidos p
+    ON u.id = p.usuario_id;
+```
+
+### Quando usar
+
+- Listar todos os usuários, mesmo aqueles que nunca fizeram pedidos.
+
+---
+
+# 📌 RIGHT OUTER JOIN
+
+Retorna todos os registros da tabela da direita e os registros correspondentes da tabela da esquerda. Quando não houver correspondência, os campos da tabela da esquerda serão preenchidos com `NULL`.
+
+```sql
+SELECT
+    u.nome,
+    p.codigo_pedido
+FROM usuarios u
+RIGHT OUTER JOIN pedidos p
+    ON u.id = p.usuario_id;
+```
+
+### Quando usar
+
+- Listar todos os pedidos, mesmo que exista algum pedido sem um usuário correspondente (situação incomum, mas útil para auditorias).
+
+---
+
+# 📌 FULL OUTER JOIN
+
+Retorna todos os registros das duas tabelas.
+
+Quando houver correspondência, os dados são unidos.
+
+Quando não houver, os campos da outra tabela serão preenchidos com `NULL`.
+
+```sql
+SELECT
+    u.nome,
+    p.codigo_pedido
+FROM usuarios u
+FULL OUTER JOIN pedidos p
+    ON u.id = p.usuario_id;
+```
+
+### Quando usar
+
+- Comparar duas tabelas e visualizar registros que existem em apenas uma delas.
+
+---
+
+# 📌 GROUP BY
+
+Agrupa registros que possuem o mesmo valor em uma ou mais colunas.
+
+É muito utilizado junto com funções de agregação como:
+
+- `COUNT()`
+- `SUM()`
+- `AVG()`
+- `MAX()`
+- `MIN()`
+
+### Exemplo 1 — Quantidade de pedidos por usuário
+
+```sql
+SELECT
+    usuario_id,
+    COUNT(*) AS total_pedidos
+FROM pedidos
+GROUP BY usuario_id;
+```
+
+### Exemplo 2 — Quantidade de usuários por data de nascimento
+
+```sql
+SELECT
+    data_nascimento,
+    COUNT(*) AS quantidade
+FROM usuarios
+GROUP BY data_nascimento;
+```
+
+### Observação
+
+Toda coluna presente no `SELECT` que **não** utiliza uma função de agregação deve aparecer no `GROUP BY`.
+
+Exemplo correto:
+
+```sql
+SELECT
+    usuario_id,
+    COUNT(*) AS total
+FROM pedidos
+GROUP BY usuario_id;
+```
+
+Exemplo incorreto:
+
+```sql
+SELECT
+    usuario_id,
+    data_pedido,
+    COUNT(*)
+FROM pedidos
+GROUP BY usuario_id;
+```
+
+Neste caso ocorrerá erro, pois `data_pedido` não está sendo agrupada nem agregada.
+
+---
+
+# 📌 HAVING
+
+Filtra os resultados após um agrupamento (`GROUP BY`).
+
+```sql
+SELECT
+    usuario_id,
     COUNT(*) AS total_pedidos
 FROM pedidos
 GROUP BY usuario_id
