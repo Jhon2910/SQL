@@ -1,4 +1,4 @@
-# 📚 Banco de Dados I — Resumo para Prova
+# 📚 Banco de Dados I
 
 > Material de revisão baseado nas aulas e exercícios de **Banco de Dados I**.  
 > Foco: conceitos iniciais, MER/DER, restrições, MER estendido e mapeamento para o modelo relacional.
