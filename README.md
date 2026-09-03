@@ -1424,7 +1424,3 @@ O material da disciplina também prevê trabalho envolvendo:
 - SQL
 
 ---
-
-> **Boa prova! 🚀**
->
-> Use principalmente as seções **12, 13, 14, 21 e 23** para uma revisão rápida.
